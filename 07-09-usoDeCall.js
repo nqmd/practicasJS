@@ -1,0 +1,1 @@
+//El método call nos va a permitir traer un método de un objeto a otro
