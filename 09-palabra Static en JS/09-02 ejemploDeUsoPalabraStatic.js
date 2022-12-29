@@ -1,17 +1,19 @@
-//Es posible agregar métodos que trabajen únicamente con una clase exclusivamente con la palabra static
-
 class Persona {
 
-    //Definiendo atributos estáticos a una clase
-    static contadorDeObjetosPersona = 0; //Atributo de nuestra clase
+    static contadorPersona = 0; //Atributo de nuestra clase
 
-    email = 'Valor default email'; //Atributo de nuestos objetos
+    static get MAX_OBJ() {
+        return 5
+    }
+
     constructor(nombre, apellido) {
         this._nombre = nombre;
         this._apellido = apellido;
-        //Valor contador de objetos creador a partir de la clase persona
-        Persona.contadorDeObjetosPersona++;
-        console.log('Se incrementa contador:' + Persona.contadorDeObjetosPersona);
+        if(Persona.contadorPersona < Persona.MAX_OBJ) {
+            this.idPersona = ++Persona.contadorPersona;  //Se realiza un pre incremento
+        } else {
+            console.log('Se han superado el máximo de objetos permitidos');   
+        }
     }
     get nombre() {
         return this._nombre;
@@ -26,11 +28,10 @@ class Persona {
         this._apellido = this.apellido
     }
     nombreCompleto() {
-        return this._nombre + ' ' + this._apellido;
+        return this.idPersona + ' ' + this._nombre + ' ' + this._apellido;
     }
     //Sobreescribiendo el método de la clase Padre (Object)
     toString() {
-        //Polimorfismo
         return this.nombreCompleto();
     }
     //Se declara el método estático para esta clase - Es importante decir que no va a poder utilizarse con los objetos
@@ -61,26 +62,24 @@ class Empleado extends Persona {
 }
 
 let persona1 = new Persona('Juan', 'Pérez');
-console.log(persona1);
-
 let empleado1 = new Empleado('Maria', 'Jimenez', 'Sistemas');
-console.log(empleado1);
+let persona2 = new Persona('Karla', 'Ramirez');
+let persona3 = new Persona('Mariano', 'Lara');
+let persona4 = new Persona('Armando', 'Toledo');
+let persona5 = new Persona('Laura', 'Quintero');
+
+console.log(persona1.toString());
 console.log(empleado1.toString());
-console.log(empleado1.nombreCompleto());
+console.log(persona2.toString());
+console.log(persona3.toString());
+console.log(persona4.toString());
+console.log(persona5.toString());
 
-Persona.saludar();
-Persona.saludar2(persona1);
+console.log(Persona.contadorPersona)
+console.log(Persona.contadorPersona)
 
+console.log(Persona.contadorPersona);
 
-//All llamar al atributo estático desde el objeto se determinará como "undefined"
-console.log(persona1.contadorDeObjetosPersona);
-//Se debe llamar al atributo estático a partir de la clase
-console.log(Persona.contadorDeObjetosPersona);
-//Es posible heredaer los atributos estáticos de una clase padre a una clase hija
-console.log(Empleado.contadorDeObjetosPersona);
-
-//Es posible llamar un valor no estático fuera del constructor
-console.log(persona1.email);
-console.log(empleado1.email);
-//El atributo no estático no se puede llamar apartir de una clase ya que no se ha definido directamente, siendo una variable nueva
-console.log(Persona.email);
+console.log(Persona.MAX_OBJ);
+Persona.MAX_OBJ = 10;
+console.log(Persona.MAX_OBJ);
